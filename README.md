@@ -1,41 +1,142 @@
 # Local Search Algorithms for 8-Puzzle and 8-Queens Problems
 
-This project implements and compares various local search algorithms to solve the 8-puzzle and 8-queens problems. The implementation includes hill climbing variants (steepest-ascent, first-choice, random-restart) and simulated annealing.
+This project implements and compares various local search algorithms for solving the 8-Puzzle and 8-Queens problems. It includes implementations of hill climbing (steepest ascent, first-choice, and random restart) and simulated annealing with different cooling schedules.
 
 ## Project Structure
 
 ```
-AI_LocalSearch_8P/
-├── src/
-│   ├── ai_berkeley/     # Berkeley AI Lab search algorithms
-│   ├── puzzle8/         # 8-puzzle problem implementation
-│   ├── queens8/         # 8-queens problem implementation
-│   └── run_experiments.py
-├── data/               # Experimental results in CSV format
-├── figures/            # Generated plots and visualizations
-├── docs/              # Reference materials and documentation
-└── report/            # Final report in IEEE format
+.
+├── data/                   # Directory for storing experiment results
+├── figures/               # Directory for storing generated plots
+├── src/                   # Source code directory
+│   ├── ai_berkeley/      # Berkeley AI search implementation
+│   ├── local_search/     # Local search algorithm implementations
+│   ├── puzzle8/          # 8-Puzzle problem implementation
+│   ├── queens8/          # 8-Queens problem implementation
+│   ├── run_experiments.py # Main experiment runner
+│   └── test_run.py       # Test script for running experiments
+├── requirements.txt       # Project dependencies
+└── README.md             # This file
 ```
 
-## Setup Instructions
+## Prerequisites
 
-1. **Environment Requirements**
-   - Python 3.8 or higher
-   - Required packages listed in `requirements.txt`
+- Python 3.8 or higher
+- pip (Python package installer)
 
-2. **Installation**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## Installation
 
-3. **Running Experiments**
-   ```bash
-   # Run full experiments
-   python -m src.run_experiments
-   
-   # Run test with fewer instances
-   python -m src.test_run
-   ```
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd AI_LocalSearch_8P
+```
+
+2. Create and activate a virtual environment (recommended):
+```bash
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On Unix or MacOS:
+source venv/bin/activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Running the Project
+
+### Running Experiments
+
+To run the experiments and generate results:
+
+```bash
+python -m src.test_run
+```
+
+This will:
+1. Run experiments on both 8-Puzzle and 8-Queens problems
+2. Generate results in the `data/` directory
+3. Create visualizations in the `figures/` directory
+
+### Running Individual Components
+
+You can also run specific components of the project:
+
+1. Run only 8-Puzzle experiments:
+```python
+from src.run_experiments import run_8puzzle_experiments
+results = run_8puzzle_experiments(num_instances=50)
+```
+
+2. Run only 8-Queens experiments:
+```python
+from src.run_experiments import run_8queens_experiments
+results = run_8queens_experiments(num_instances=50)
+```
+
+## Project Components
+
+### Local Search Algorithms
+
+The project implements several local search algorithms:
+
+1. Hill Climbing:
+   - Steepest Ascent: Explores all neighbors and selects the best improvement
+   - First Choice: Randomly explores neighbors until finding an improvement
+   - Random Restart: Performs multiple hill climbing runs from random initial states
+
+2. Simulated Annealing:
+   - Exponential Schedule: Temperature decreases exponentially
+   - Linear Schedule: Temperature decreases linearly
+
+### Problems
+
+1. 8-Puzzle:
+   - Implementation includes Manhattan distance heuristic
+   - A* search for optimal solutions
+   - Local search with valid move generation
+
+2. 8-Queens:
+   - Implementation includes conflict counting
+   - Local search with neighbor state generation
+   - Solution validation
+
+## Results and Analysis
+
+The experiments generate several types of results:
+
+1. Success Rates: Percentage of instances solved by each algorithm
+2. Average Steps: Number of steps taken to reach a solution
+3. Runtime: Time taken by each algorithm
+4. Optimality Gap: Difference between local search steps and A* optimal steps (for 8-Puzzle)
+5. Value Improvement: Improvement in evaluation function value
+
+Visualizations include:
+- Success rate comparisons
+- Runtime analysis
+- Step count analysis
+- Optimality gap distribution
+- Value improvement distribution
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Berkeley AI course materials for the A* search implementation
+- Contributors and maintainers of the project
 
 ## Algorithms Implemented
 

@@ -8,6 +8,7 @@ functions.
 
 import sys
 from collections import deque
+import time
 
 from .utils import *
 
@@ -257,8 +258,8 @@ def breadth_first_graph_search(problem):
     return None
 
 
-def best_first_graph_search(problem, f, display=False):
-    """Search the nodes with the lowest f scores first.
+def best_first_graph_search(problem, f, display=False, timeout=10):
+    """Search the nodes with the lowest f(node) value first.
     You specify the function f(node) that you want to minimize; for example,
     if f is a heuristic estimate to the goal, then we have greedy best
     first search; if f is node.depth then we have breadth-first search.
@@ -270,11 +271,14 @@ def best_first_graph_search(problem, f, display=False):
     frontier = PriorityQueue('min', f)
     frontier.append(node)
     explored = set()
+    start_time = time.time()
+    
     while frontier:
+        if time.time() - start_time > timeout:
+            return None
+            
         node = frontier.pop()
         if problem.goal_test(node.state):
-            if display:
-                print(len(explored), "paths have been expanded and", len(frontier), "paths remain in the frontier")
             return node
         explored.add(node.state)
         for child in node.expand(problem):
@@ -412,7 +416,7 @@ greedy_best_first_graph_search = best_first_graph_search
 # Greedy best-first search is accomplished by specifying f(n) = h(n).
 
 
-def astar_search(problem, h=None, display=False):
+def astar_search(problem, h=None, display=False, timeout=10):
     """A* search is best-first graph search with f(n) = g(n)+h(n).
     You need to specify the h function when you call astar_search, or
     else in your Problem subclass."""
