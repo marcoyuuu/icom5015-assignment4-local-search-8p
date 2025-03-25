@@ -1,4 +1,24 @@
-# Local Search Algorithms for 8-Puzzle and 8-Queens Problems
+# University of Puerto Rico at Mayagüez  
+### Department of Electrical and Computer Engineering  
+#### ICOM5015 - Artificial Intelligence
+
+**Project Title:** Local Search Algorithms for 8-Puzzle and 8-Queens Problems 
+**Assignment:** Programming Homework – Chapter 4 (Problem 4.4)  
+
+**Team:** Group M  
+- **Marco Yu** (Undergraduate, Computer Science)  
+- **Samir Rivera** (Undergraduate, Software Engineering)  
+- **Lex Feliciano** (Undergraduate, Electrical and Computer Engineering)  
+- **Shadiel López** (Undergraduate, Computer Engineering)  
+
+**Professor:** J. Fernando Vega Riveros  
+**Date:** March 26, 2025  
+
+<p align="center">
+  <img src="https://www.uprm.edu/wdt/resources/seal-rum-uprm-1280x1280px.png" alt="UPRM Logo" width="250" height="250">
+</p>
+
+---
 
 This project implements and compares various local search algorithms for solving the 8-Puzzle and 8-Queens problems. It includes implementations of hill climbing (steepest ascent, first-choice, and random restart) and simulated annealing with different cooling schedules.
 
