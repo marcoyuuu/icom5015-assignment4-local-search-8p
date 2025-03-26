@@ -32,23 +32,34 @@ def set_ieee_style():
     })
 
 def create_success_rate_plot(df, problem):
-    """Create bar plot of success rates for a specific problem."""
-    plt.figure(figsize=(10, 6))
+    """Create a bar plot of success rates for a specific problem.
     
-    # Filter data for specific problem
+    Args:
+        df (pd.DataFrame): DataFrame containing summary statistics with columns:
+            - Problem: Name of the problem
+            - Algorithm: Name of the algorithm
+            - Success %: Success rate in percentage
+        problem (str): Name of the problem to plot ('8-Puzzle' or '8-Queens')
+    
+    The plot shows:
+        - Success rate for each algorithm on the specified problem
+        - Error bars showing standard deviation
+        - Clear labels and legend
+    """
+    # Filter data for the specific problem
     problem_data = df[df['Problem'] == problem]
     
     # Create bar plot
-    bars = plt.bar(problem_data['Algorithm'], 
-                   problem_data['Success %'],
-                   color=[ALGORITHM_COLORS[alg] for alg in problem_data['Algorithm']])
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(problem_data['Algorithm'], problem_data['Success %'],
+                   yerr=problem_data['Solution Std'] * 100,
+                   capsize=5)
     
     # Customize plot
-    plt.title(f'Success Rate on {problem}', fontsize=14, pad=20)
-    plt.ylabel('Success Rate (%)', fontsize=12)
-    plt.xlabel('Algorithm', fontsize=12)
+    plt.title(f'Success Rate by Algorithm - {problem}', pad=20)
+    plt.xlabel('Algorithm')
+    plt.ylabel('Success Rate (%)')
     plt.xticks(rotation=45, ha='right')
-    plt.grid(True, axis='y', linestyle='--', alpha=0.7)
     
     # Add value labels on top of bars
     for bar in bars:
@@ -57,33 +68,40 @@ def create_success_rate_plot(df, problem):
                 f'{height:.1f}%',
                 ha='center', va='bottom')
     
-    # Adjust layout
     plt.tight_layout()
-    
-    # Save plot
-    os.makedirs('figures', exist_ok=True)
-    plt.savefig(f'figures/{problem.lower().replace("-", "_")}_success.png',
-                dpi=300, bbox_inches='tight')
+    plt.savefig(f'figures/{problem.lower().replace("-", "_")}_success.png')
     plt.close()
 
 def create_steps_plot(df, problem):
-    """Create bar plot of average steps for a specific problem."""
-    plt.figure(figsize=(10, 6))
+    """Create a bar plot of average steps for a specific problem.
     
-    # Filter data for specific problem
+    Args:
+        df (pd.DataFrame): DataFrame containing summary statistics with columns:
+            - Problem: Name of the problem
+            - Algorithm: Name of the algorithm
+            - Avg Steps: Mean number of steps
+            - Steps Std: Standard deviation of steps
+        problem (str): Name of the problem to plot ('8-Puzzle' or '8-Queens')
+    
+    The plot shows:
+        - Average steps for each algorithm on the specified problem
+        - Error bars showing standard deviation
+        - Clear labels and legend
+    """
+    # Filter data for the specific problem
     problem_data = df[df['Problem'] == problem]
     
     # Create bar plot
-    bars = plt.bar(problem_data['Algorithm'], 
-                   problem_data['Avg Steps'],
-                   color=[ALGORITHM_COLORS[alg] for alg in problem_data['Algorithm']])
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(problem_data['Algorithm'], problem_data['Avg Steps'],
+                   yerr=problem_data['Steps Std'],
+                   capsize=5)
     
     # Customize plot
-    plt.title(f'Average Steps on {problem}', fontsize=14, pad=20)
-    plt.ylabel('Average Number of Steps', fontsize=12)
-    plt.xlabel('Algorithm', fontsize=12)
+    plt.title(f'Average Steps by Algorithm - {problem}', pad=20)
+    plt.xlabel('Algorithm')
+    plt.ylabel('Number of Steps')
     plt.xticks(rotation=45, ha='right')
-    plt.grid(True, axis='y', linestyle='--', alpha=0.7)
     
     # Add value labels on top of bars
     for bar in bars:
@@ -92,107 +110,153 @@ def create_steps_plot(df, problem):
                 f'{height:.1f}',
                 ha='center', va='bottom')
     
-    # Adjust layout
     plt.tight_layout()
-    
-    # Save plot
-    os.makedirs('figures', exist_ok=True)
-    plt.savefig(f'figures/{problem.lower().replace("-", "_")}_steps.png',
-                dpi=300, bbox_inches='tight')
+    plt.savefig(f'figures/{problem.lower().replace("-", "_")}_steps.png')
     plt.close()
 
 def create_runtime_plot(df, problem):
-    """Create bar plot of average runtime for a specific problem."""
-    plt.figure(figsize=(10, 6))
+    """Create a bar plot of average runtime for a specific problem.
     
-    # Filter data for specific problem
+    Args:
+        df (pd.DataFrame): DataFrame containing summary statistics with columns:
+            - Problem: Name of the problem
+            - Algorithm: Name of the algorithm
+            - Avg Time: Mean runtime
+            - Time Std: Standard deviation of runtime
+        problem (str): Name of the problem to plot ('8-Puzzle' or '8-Queens')
+    
+    The plot shows:
+        - Average runtime for each algorithm on the specified problem
+        - Error bars showing standard deviation
+        - Clear labels and legend
+    """
+    # Filter data for the specific problem
     problem_data = df[df['Problem'] == problem]
     
     # Create bar plot
-    bars = plt.bar(problem_data['Algorithm'], 
-                   problem_data['Avg Time'],
-                   color=[ALGORITHM_COLORS[alg] for alg in problem_data['Algorithm']])
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(problem_data['Algorithm'], problem_data['Avg Time'],
+                   yerr=problem_data['Time Std'],
+                   capsize=5)
     
     # Customize plot
-    plt.title(f'Average Runtime on {problem}', fontsize=14, pad=20)
-    plt.ylabel('Average Runtime (seconds)', fontsize=12)
-    plt.xlabel('Algorithm', fontsize=12)
+    plt.title(f'Average Runtime by Algorithm - {problem}', pad=20)
+    plt.xlabel('Algorithm')
+    plt.ylabel('Runtime (seconds)')
     plt.xticks(rotation=45, ha='right')
-    plt.grid(True, axis='y', linestyle='--', alpha=0.7)
     
     # Add value labels on top of bars
     for bar in bars:
         height = bar.get_height()
         plt.text(bar.get_x() + bar.get_width()/2., height,
-                f'{height:.6f}',
+                f'{height:.3f}s',
                 ha='center', va='bottom')
     
-    # Adjust layout
     plt.tight_layout()
-    
-    # Save plot
-    os.makedirs('figures', exist_ok=True)
-    plt.savefig(f'figures/{problem.lower().replace("-", "_")}_runtime.png',
-                dpi=300, bbox_inches='tight')
+    plt.savefig(f'figures/{problem.lower().replace("-", "_")}_runtime.png')
     plt.close()
 
 def create_comparison_plot(df):
-    """Create side-by-side comparison of success rates for both problems."""
-    plt.figure(figsize=(12, 6))
+    """Create a comparison plot showing success rates across problems.
     
-    # Prepare data for grouped bar plot
-    algorithms = df['Algorithm'].unique()
-    problems = df['Problem'].unique()
+    Args:
+        df (pd.DataFrame): DataFrame containing summary statistics with columns:
+            - Problem: Name of the problem
+            - Algorithm: Name of the algorithm
+            - Success %: Success rate in percentage
     
-    x = np.arange(len(algorithms))
-    width = 0.35
+    The plot shows:
+        - Success rates for each algorithm on both problems
+        - Side-by-side comparison for easy visualization
+        - Clear labels and legend
+    """
+    # Create figure with two subplots
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
     
-    # Create bars for each problem
-    for i, problem in enumerate(problems):
+    # Plot for each problem
+    for idx, problem in enumerate(['8-Puzzle', '8-Queens']):
         problem_data = df[df['Problem'] == problem]
-        plt.bar(x + i*width, problem_data['Success %'], width,
-                label=problem, color=[ALGORITHM_COLORS[alg] for alg in algorithms])
+        ax = ax1 if idx == 0 else ax2
+        
+        bars = ax.bar(problem_data['Algorithm'], problem_data['Success %'])
+        ax.set_title(f'Success Rate - {problem}')
+        ax.set_xlabel('Algorithm')
+        ax.set_ylabel('Success Rate (%)')
+        ax.tick_params(axis='x', rotation=45, ha='right')
+        
+        # Add value labels
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height,
+                   f'{height:.1f}%',
+                   ha='center', va='bottom')
     
-    # Customize plot
-    plt.title('Success Rate Comparison Across Problems', fontsize=14, pad=20)
-    plt.ylabel('Success Rate (%)', fontsize=12)
-    plt.xlabel('Algorithm', fontsize=12)
-    plt.xticks(x + width/2, algorithms, rotation=45, ha='right')
-    plt.legend()
-    plt.grid(True, axis='y', linestyle='--', alpha=0.7)
-    
-    # Adjust layout
     plt.tight_layout()
-    
-    # Save plot
-    os.makedirs('figures', exist_ok=True)
-    plt.savefig('figures/success_rate_comparison.png',
-                dpi=300, bbox_inches='tight')
+    plt.savefig('figures/success_rate_comparison.png')
     plt.close()
 
 def create_performance_matrix(df):
-    """Create a heatmap of performance metrics across algorithms and problems."""
-    plt.figure(figsize=(12, 8))
+    """Create a performance matrix showing all metrics for all algorithms.
     
-    # Prepare data for heatmap
-    metrics = ['Success %', 'Avg Steps', 'Avg Time']
-    pivot_data = df.pivot(index='Problem', columns='Algorithm', values=metrics)
+    Args:
+        df (pd.DataFrame): DataFrame containing summary statistics with columns:
+            - Problem: Name of the problem
+            - Algorithm: Name of the algorithm
+            - Success %: Success rate in percentage
+            - Avg Steps: Mean number of steps
+            - Avg Time: Mean runtime
     
-    # Create heatmap
-    sns.heatmap(pivot_data, annot=True, fmt='.2f', cmap='YlOrRd')
+    The plot shows:
+        - A matrix of subplots for each metric
+        - Comparison across problems and algorithms
+        - Clear labels and color coding
+    """
+    # Create figure with subplots for each metric
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+    axes = axes.ravel()
     
-    # Customize plot
-    plt.title('Performance Matrix Across Problems and Algorithms', fontsize=14, pad=20)
-    plt.xlabel('Algorithm', fontsize=12)
-    plt.ylabel('Problem', fontsize=12)
+    # Metrics to plot
+    metrics = [
+        ('Success %', 'Success Rate (%)'),
+        ('Avg Steps', 'Number of Steps'),
+        ('Avg Time', 'Runtime (seconds)')
+    ]
     
-    # Adjust layout
+    # Plot each metric
+    for idx, (metric, label) in enumerate(metrics):
+        ax = axes[idx]
+        
+        # Plot for each problem
+        for problem in ['8-Puzzle', '8-Queens']:
+            problem_data = df[df['Problem'] == problem]
+            x = np.arange(len(problem_data['Algorithm']))
+            width = 0.35
+            
+            bars = ax.bar(x + width/2 if problem == '8-Queens' else x - width/2,
+                         problem_data[metric],
+                         width,
+                         label=problem)
+            
+            # Add value labels
+            for bar in bars:
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{height:.1f}{"%" if metric == "Success %" else ""}',
+                       ha='center', va='bottom')
+        
+        ax.set_title(f'{label} by Algorithm')
+        ax.set_xlabel('Algorithm')
+        ax.set_ylabel(label)
+        ax.set_xticks(x)
+        ax.set_xticklabels(problem_data['Algorithm'], rotation=45, ha='right')
+        ax.legend()
+    
+    # Remove the last subplot if we have an odd number of metrics
+    if len(metrics) < 4:
+        axes[-1].remove()
+    
     plt.tight_layout()
-    
-    # Save plot
-    os.makedirs('figures', exist_ok=True)
-    plt.savefig('figures/performance_matrix.png',
-                dpi=300, bbox_inches='tight')
+    plt.savefig('figures/performance_matrix.png')
     plt.close()
 
 def create_combined_metrics_plot(df, problem):

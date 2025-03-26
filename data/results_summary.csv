@@ -1,0 +1,11 @@
+Problem,Algorithm,Solution Rate,Solution Std,Num Instances,Avg Steps,Steps Std,Avg Runtime,Runtime Std,Avg Value Improvement,Value Improvement Std
+8-Puzzle,Hill Climbing (First Choice),0.0,0.0,50,1.64,1.57,0.0,0.0,-1.64,1.57
+8-Puzzle,Hill Climbing (Random Restart),0.02,0.14,50,28.16,6.08,0.0,0.0,-6.78,3.38
+8-Puzzle,Hill Climbing (Steepest),0.0,0.0,50,1.76,2.03,0.0,0.0,-1.76,2.03
+8-Puzzle,Simulated Annealing (Exponential),0.0,0.0,50,969.88,5.82,0.0,0.0,-1.28,4.07
+8-Puzzle,Simulated Annealing (Linear),0.0,0.0,50,244.98,12.93,0.0,0.0,-8.82,3.01
+8-Queens,Hill Climbing (First Choice),0.08,0.27,50,3.28,1.99,0.0,0.0,-3.94,2.72
+8-Queens,Hill Climbing (Random Restart),0.72,0.45,50,32.5,3.98,0.01,0.0,-5.0,2.6
+8-Queens,Hill Climbing (Steepest),0.16,0.37,50,2.66,1.41,0.0,0.0,-3.9,2.55
+8-Queens,Simulated Annealing (Exponential),0.0,0.0,50,958.42,5.62,0.01,0.0,2.14,3.15
+8-Queens,Simulated Annealing (Linear),0.56,0.5,50,247.08,23.52,0.01,0.0,-4.84,2.53
